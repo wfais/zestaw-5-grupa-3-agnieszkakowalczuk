@@ -30,6 +30,7 @@ def bubble_sort(array: MonitorowanaTablica):
 
 
 def shell_sort(array: MonitorowanaTablica):
+
     left = 0
     right = len(array) - 1
 
@@ -52,27 +53,67 @@ def shell_sort(array: MonitorowanaTablica):
 
 
 
-def merge_sort(array: MonitorowanaTablica, left=None, right=None):
-# twoj kod
-    pass
+def merge_sort(array: MonitorowanaTablica, left=0, right=None):
+    if right is None:
+        right = len(array) - 1
+    if left < right:
+        middle = (left + right) // 2
+
+        merge_sort(array, left, middle)
+        merge_sort(array, middle + 1, right)
+        merge(array, left, middle, right)
+
 
 
 def merge(array: MonitorowanaTablica, left, middle, right):
-    """Merges two sorted subarrays."""
-    # twoj kod, moze sie przydac
-    pass
-
+    T = [None] * (right - left + 1)
+    left1 = left
+    right1 = middle
+    left2 = middle + 1
+    right2 = right
+    i = 0
+    while left1 <= right1 and left2 <= right2:
+        if array[left1] <= array[left2]:
+            T[i] = array[left1]
+            left1 += 1
+        else:
+            T[i] = array[left2]
+            left2 += 1
+        i += 1
+    while left1 <= right1:
+        T[i] = array[left1]
+        left1 += 1
+        i += 1
+    while left2 <= right2:
+        T[i] = array[left2]
+        left2 += 1
+        i += 1
+    for i in range(right - left + 1):
+        array[left + i] = T[i]
 
 def quick_sort(array: MonitorowanaTablica, left=None, right=None):
-    """Performs quick sort on the given array."""
-    # twoj kod
-    pass
+    if right is None:
+        right = len(array) - 1
+    if left is None:
+        left = 0
+    if left < right:
+        pivot = partition(array, left, right)
+        quick_sort(array, left, pivot - 1)
+        quick_sort(array, pivot + 1, right)
+
 
 
 def partition(array: MonitorowanaTablica, left, right):
-    """Partitions the array into two parts."""
-    # twoj kod, moze sie przydac
-    pass
+    pivot = array[right]
+    i = left
+
+    for j in range(left, right):
+        if array[j] <= pivot:
+
+            array[i], array[j] = array[j], array[i]
+            i+=1
+    array[i], array[right] = array[right], array[i]
+    return i
 
 
 def tim_sort(array: MonitorowanaTablica):
@@ -85,7 +126,7 @@ algorytmy = [
     (insertion_sort, "Insertion Sort"),
     (bubble_sort, "Bubble Sort"),
     (shell_sort, "Shell Sort"),
-    # (merge_sort, "Merge Sort"),
-    # (quick_sort, "Quick Sort"),
+    (merge_sort, "Merge Sort"),
+    (quick_sort, "Quick Sort"),
     # (tim_sort, "Tim Sort"),
 ]
