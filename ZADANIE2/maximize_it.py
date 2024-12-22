@@ -1,10 +1,11 @@
 from itertools import product
 
 
-
 def maximize_expression(K, M, lists):
-    # twoj kod tutaj
-    pass 
+    options = []
+    for i in product(*lists):
+        options.append(sum([x**2 for x in i]) % M)
+    return max(options)
 
 
 
